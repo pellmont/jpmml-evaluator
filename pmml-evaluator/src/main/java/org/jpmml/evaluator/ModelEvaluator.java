@@ -26,7 +26,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import com.google.common.base.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -98,8 +98,14 @@ public class ModelEvaluator<M extends Model> implements Evaluator, Serializable 
 
 
 	protected ModelEvaluator(PMML pmml, M model){
-		setPMML(Objects.requireNonNull(pmml));
-		setModel(Objects.requireNonNull(model));
+		if (pmml == null) {
+			throw new NullPointerException();
+		}
+		if (model == null) {
+			throw new NullPointerException();
+		}
+		setPMML(pmml);
+		setModel(model);
 
 		DataDictionary dataDictionary = pmml.getDataDictionary();
 		if(dataDictionary == null){
@@ -156,7 +162,7 @@ public class ModelEvaluator<M extends Model> implements Evaluator, Serializable 
 
 	public DataField getDataField(FieldName name){
 
-		if(Objects.equals(Evaluator.DEFAULT_TARGET_NAME, name)){
+		if(Objects.equal(Evaluator.DEFAULT_TARGET_NAME, name)){
 			return getDataField();
 		}
 
@@ -193,7 +199,7 @@ public class ModelEvaluator<M extends Model> implements Evaluator, Serializable 
 
 	public MiningField getMiningField(FieldName name){
 
-		if(Objects.equals(Evaluator.DEFAULT_TARGET_NAME, name)){
+		if(Objects.equal(Evaluator.DEFAULT_TARGET_NAME, name)){
 			return null;
 		}
 

@@ -19,7 +19,7 @@
 package org.jpmml.evaluator.functions;
 
 import java.util.List;
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 import org.dmg.pmml.DataType;
 import org.jpmml.evaluator.FieldValue;
@@ -33,7 +33,10 @@ public class AbstractFunction implements Function {
 
 
 	public AbstractFunction(String name){
-		setName(Objects.requireNonNull(name));
+		if (name == null) {
+			throw new NullPointerException();
+		}
+		setName(name);
 	}
 
 	protected void checkArguments(List<FieldValue> arguments, int size){

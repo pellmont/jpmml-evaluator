@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 import org.dmg.pmml.DataField;
 import org.dmg.pmml.FieldName;
@@ -101,7 +101,7 @@ public class RegressionModelEvaluator extends ModelEvaluator<RegressionModel> {
 		TargetField targetField = getTargetField();
 
 		FieldName targetFieldName = regressionModel.getTargetFieldName();
-		if(targetFieldName != null && !Objects.equals(targetField.getName(), targetFieldName)){
+		if(targetFieldName != null && !Objects.equal(targetField.getName(), targetFieldName)){
 			throw new InvalidFeatureException(regressionModel);
 		}
 
@@ -128,7 +128,7 @@ public class RegressionModelEvaluator extends ModelEvaluator<RegressionModel> {
 		TargetField targetField = getTargetField();
 
 		FieldName targetFieldName = regressionModel.getTargetFieldName();
-		if(targetFieldName != null && !Objects.equals(targetField.getName(), targetFieldName)){
+		if(targetFieldName != null && !Objects.equal(targetField.getName(), targetFieldName)){
 			throw new InvalidFeatureException(regressionModel);
 		}
 

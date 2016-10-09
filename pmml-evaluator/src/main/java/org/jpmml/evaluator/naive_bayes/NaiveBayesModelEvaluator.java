@@ -33,7 +33,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -221,7 +221,7 @@ public class NaiveBayesModelEvaluator extends ModelEvaluator<NaiveBayesModel> {
 		result.normalizeValues();
 
 		FieldName targetFieldName = bayesOutput.getFieldName();
-		if(targetFieldName == null || !Objects.equals(targetField.getName(), targetFieldName)){
+		if(targetFieldName == null || !Objects.equal(targetField.getName(), targetFieldName)){
 			throw new InvalidFeatureException(bayesOutput);
 		}
 

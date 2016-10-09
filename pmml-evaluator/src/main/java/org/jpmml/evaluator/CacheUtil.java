@@ -27,7 +27,7 @@
  */
 package org.jpmml.evaluator;
 
-import java.util.Objects;
+import com.google.common.base.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
@@ -41,72 +41,66 @@ import org.dmg.pmml.PMMLObject;
 
 public class CacheUtil {
 
-	private CacheUtil(){
+	private CacheUtil() {
 	}
 
-	static
-	public <K extends PMMLObject, V> V getValue(K key, LoadingCache<K, V> cache){
+	static public <K extends PMMLObject, V> V getValue(K key, LoadingCache<K, V> cache) {
 
 		try {
 			return cache.get(key);
-		} catch(ExecutionException | UncheckedExecutionException e){
+		} catch (ExecutionException | UncheckedExecutionException e) {
 			Throwable cause = e.getCause();
 
-			if(cause instanceof PMMLException){
-				throw (PMMLException)cause;
+			if (cause instanceof PMMLException) {
+				throw (PMMLException) cause;
 			}
 
-			throw (PMMLException)new InvalidFeatureException(key)
-				.initCause(cause);
+			throw (PMMLException) new InvalidFeatureException(key).initCause(cause);
 		}
 	}
 
-	static
-	public <K extends PMMLObject, V> V getValue(K key, Cache<K, V> cache, Callable<? extends V> loader){
+	static public <K extends PMMLObject, V> V getValue(K key, Cache<K, V> cache, Callable<? extends V> loader) {
 
 		try {
 			return cache.get(key, loader);
-		} catch(ExecutionException | UncheckedExecutionException e){
+		} catch (ExecutionException | UncheckedExecutionException e) {
 			Throwable cause = e.getCause();
 
-			if(cause instanceof PMMLException){
-				throw (PMMLException)cause;
+			if (cause instanceof PMMLException) {
+				throw (PMMLException) cause;
 			}
 
-			throw (PMMLException)new InvalidFeatureException(key)
-				.initCause(cause);
+			throw (PMMLException) new InvalidFeatureException(key).initCause(cause);
 		}
 	}
 
-	static
-	public <K extends PMMLObject, V> Cache<K, V> buildCache(){
+	static public <K extends PMMLObject, V> Cache<K, V> buildCache() {
 		CacheBuilder<Object, Object> cacheBuilder = newCacheBuilder();
 
 		return cacheBuilder.build();
 	}
 
-	static
-	public <K extends PMMLObject, V> LoadingCache<K, V> buildLoadingCache(CacheLoader<K, V> cacheLoader){
+	static public <K extends PMMLObject, V> LoadingCache<K, V> buildLoadingCache(CacheLoader<K, V> cacheLoader) {
 		CacheBuilder<Object, Object> cacheBuilder = newCacheBuilder();
 
 		return cacheBuilder.build(cacheLoader);
 	}
 
-	static
-	private CacheBuilder<Object, Object> newCacheBuilder(){
+	static private CacheBuilder<Object, Object> newCacheBuilder() {
 		CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.from(CacheUtil.cacheBuilderSpec);
 
 		return cacheBuilder;
 	}
 
-	static
-	public CacheBuilderSpec getCacheBuilderSpec(){
+	static public CacheBuilderSpec getCacheBuilderSpec() {
 		return CacheUtil.cacheBuilderSpec;
 	}
 
-	static
-	public void setCacheBuilderSpec(CacheBuilderSpec cacheBuilderSpec){
-		CacheUtil.cacheBuilderSpec = Objects.requireNonNull(cacheBuilderSpec);
+	static public void setCacheBuilderSpec(CacheBuilderSpec cacheBuilderSpec) {
+		if (cacheBuilderSpec == null) {
+			throw new NullPointerException();
+		}
+		CacheUtil.cacheBuilderSpec = cacheBuilderSpec;
 	}
 
 	private static CacheBuilderSpec cacheBuilderSpec = CacheBuilderSpec.parse("weakKeys");

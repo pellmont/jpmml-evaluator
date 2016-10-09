@@ -20,7 +20,7 @@ package org.jpmml.knime.visitors;
 
 import java.util.Deque;
 import java.util.List;
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 import org.dmg.pmml.DataDictionary;
 import org.dmg.pmml.DataField;
@@ -50,7 +50,10 @@ public class RegressionTargetCorrector extends AbstractModelVisitor {
 	}
 
 	public RegressionTargetCorrector(Target.CastInteger castInteger){
-		setCastInteger(Objects.requireNonNull(castInteger));
+		if(castInteger == null) {
+			throw new NullPointerException();
+		}
+		setCastInteger(castInteger);
 	}
 
 	@Override

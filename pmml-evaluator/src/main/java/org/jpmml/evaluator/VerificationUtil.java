@@ -18,7 +18,7 @@
  */
 package org.jpmml.evaluator;
 
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 public class VerificationUtil {
 
@@ -32,7 +32,7 @@ public class VerificationUtil {
 			return acceptable((Number)expected, (Number)actual, precision, zeroThreshold);
 		}
 
-		return Objects.equals(expected, actual);
+		return Objects.equal(expected, actual);
 	}
 
 	/**

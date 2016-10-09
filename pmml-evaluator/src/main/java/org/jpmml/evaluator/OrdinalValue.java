@@ -20,7 +20,7 @@ package org.jpmml.evaluator;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 import org.dmg.pmml.DataType;
 import org.dmg.pmml.OpType;
@@ -75,7 +75,7 @@ public class OrdinalValue extends FieldValue {
 		if(object instanceof OrdinalValue){
 			OrdinalValue that = (OrdinalValue)object;
 
-			return super.equals(object) && Objects.equals(this.getOrdering(), that.getOrdering());
+			return super.equals(object) && Objects.equal(this.getOrdering(), that.getOrdering());
 		}
 
 		return false;

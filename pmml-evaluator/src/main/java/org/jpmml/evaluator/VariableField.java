@@ -18,7 +18,7 @@
  */
 package org.jpmml.evaluator;
 
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 import org.dmg.pmml.DataType;
 import org.dmg.pmml.Field;
@@ -33,7 +33,10 @@ class VariableField extends Field {
 
 
 	VariableField(FieldName name){
-		setName(Objects.requireNonNull(name));
+		if (name == null) {
+			throw new NullPointerException();
+		}
+		setName(name);
 	}
 
 	@Override

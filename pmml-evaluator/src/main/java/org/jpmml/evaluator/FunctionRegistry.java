@@ -20,7 +20,7 @@ package org.jpmml.evaluator;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 /**
  * <p>
@@ -100,7 +100,8 @@ public class FunctionRegistry {
 	 */
 	static
 	public void putFunction(String name, Function function){
-		FunctionRegistry.functions.put(Objects.requireNonNull(name), function);
+		if (name == null) { throw new NullPointerException();}
+		FunctionRegistry.functions.put(name, function);
 	}
 
 	/**
@@ -110,7 +111,8 @@ public class FunctionRegistry {
 	 */
 	static
 	public void putFunction(String name, Class<? extends Function> functionClazz){
-		FunctionRegistry.functionClazzes.put(Objects.requireNonNull(name), checkClass(functionClazz));
+		if (name == null) { throw new NullPointerException();}
+		FunctionRegistry.functionClazzes.put(name, checkClass(functionClazz));
 	}
 
 	static

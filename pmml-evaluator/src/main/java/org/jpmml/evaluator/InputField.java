@@ -18,7 +18,7 @@
  */
 package org.jpmml.evaluator;
 
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 import org.dmg.pmml.DataField;
 import org.dmg.pmml.DataType;
@@ -35,10 +35,16 @@ public class InputField extends ModelField {
 
 
 	public InputField(Field field, MiningField miningField){
-		setField(Objects.requireNonNull(field));
-		setMiningField(Objects.requireNonNull(miningField));
+		if (field == null) {
+			throw new NullPointerException();
+		}
+		if (miningField == null) {
+			throw new NullPointerException();
+		}
+		setField(field);
+		setMiningField(miningField);
 
-		if(!Objects.equals(field.getName(), miningField.getName())){
+		if(!Objects.equal(field.getName(), miningField.getName())){
 			throw new IllegalArgumentException();
 		}
 	}

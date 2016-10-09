@@ -18,7 +18,7 @@
  */
 package org.jpmml.evaluator;
 
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 import org.dmg.pmml.DataField;
 import org.dmg.pmml.DataType;
@@ -37,7 +37,10 @@ public class TargetField extends ResultField {
 
 
 	public TargetField(DataField dataField, MiningField miningField, Target target){
-		setDataField(Objects.requireNonNull(dataField));
+		if (dataField == null) {
+			throw new NullPointerException();
+		}
+		setDataField(dataField);
 		setMiningField(miningField);
 		setTarget(target);
 	}

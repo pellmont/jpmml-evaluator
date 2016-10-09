@@ -18,7 +18,7 @@
  */
 package org.jpmml.evaluator;
 
-import java.util.Objects;
+import com.google.common.base.Objects;
 
 import com.google.common.base.Objects.ToStringHelper;
 import org.dmg.pmml.DataType;
@@ -41,7 +41,10 @@ public class OutputField extends ResultField {
 	}
 
 	public OutputField(org.dmg.pmml.OutputField outputField, int depth){
-		setOutputField(Objects.requireNonNull(outputField));
+		if (outputField == null) {
+			throw new NullPointerException();
+		}
+		setOutputField(outputField);
 
 		if(depth < 0){
 			throw new IllegalArgumentException();
